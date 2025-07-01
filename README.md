@@ -1,58 +1,33 @@
+# CDK ECS Fargate Deployment with Secrets Manager
 
-# Welcome to your CDK Python project!
+This project demonstrates a secure, production-ready deployment of a containerized application using AWS CDK in Python. It provisions a VPC, ECS Fargate cluster, and deploys a Dockerized NGINX container with secrets injected from AWS Secrets Manager.
 
-This is a blank project for CDK development with Python.
+---
 
-The `cdk.json` file tells the CDK Toolkit how to execute your app.
+## ✅ Features
 
-This project is set up like a standard Python project.  The initialization
-process also creates a virtualenv within this project, stored under the `.venv`
-directory.  To create the virtualenv it assumes that there is a `python3`
-(or `python` for Windows) executable in your path with access to the `venv`
-package. If for any reason the automatic creation of the virtualenv fails,
-you can create the virtualenv manually.
+- AWS CDK (Python)
+- ECS Fargate cluster
+- NGINX container from public registry
+- Secrets injected from AWS Secrets Manager
+- CloudWatch log streaming
+- Public IP access
 
-To manually create a virtualenv on MacOS and Linux:
+---
 
-```
-$ python3 -m venv .venv
-```
+## 🧱 Stack Components
 
-After the init process completes and the virtualenv is created, you can use the following
-step to activate your virtualenv.
+- `aws_ec2.Vpc`: Private/public subnets
+- `aws_ecs.Cluster`: Managed ECS Fargate cluster
+- `aws_secretsmanager.Secret`: Mock secret created via CDK
+- `aws_ecs.FargateService`: Docker container with exposed port 80
 
-```
-$ source .venv/bin/activate
-```
+---
 
-If you are a Windows platform, you would activate the virtualenv like this:
+## 🔒 Secret Injection
 
-```
-% .venv\Scripts\activate.bat
-```
+```python
+secrets={
+  "APP_SECRET": ecs.Secret.from_secrets_manager(secret)
+}
 
-Once the virtualenv is activated, you can install the required dependencies.
-
-```
-$ pip install -r requirements.txt
-```
-
-At this point you can now synthesize the CloudFormation template for this code.
-
-```
-$ cdk synth
-```
-
-To add additional dependencies, for example other CDK libraries, just add
-them to your `setup.py` file and rerun the `pip install -r requirements.txt`
-command.
-
-## Useful commands
-
- * `cdk ls`          list all stacks in the app
- * `cdk synth`       emits the synthesized CloudFormation template
- * `cdk deploy`      deploy this stack to your default AWS account/region
- * `cdk diff`        compare deployed stack with current state
- * `cdk docs`        open CDK documentation
-
-Enjoy!
